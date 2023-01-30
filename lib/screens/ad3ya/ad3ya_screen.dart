@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:quran_app/screens/askar/askar_night_screen.dart';
 
 import 'package:quran_app/utills/colors.dart';
 import 'package:quran_app/utills/diminsions.dart';

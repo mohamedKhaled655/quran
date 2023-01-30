@@ -10,25 +10,29 @@ class Elroqya extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-            height: Dimensions.height200,
-            margin: EdgeInsets.only(
-                left: Dimensions.height10, right: Dimensions.height20,top: Dimensions.height20),
-           
-            decoration: BoxDecoration(
-              color: AppColor.paraColor.withOpacity(.4),
-              borderRadius: BorderRadius.circular(25),
-              image: DecorationImage(
-                image: AssetImage("assets/images/aaa.jpg"),
-                opacity: .5,
-                fit: BoxFit.cover,
+        Expanded(
+          flex: 1,
+          child: Container(
+              height: Dimensions.height200,
+              margin: EdgeInsets.only(
+                  left: Dimensions.height10, right: Dimensions.height20,top: Dimensions.height20),
+
+              decoration: BoxDecoration(
+                color: AppColor.paraColor.withOpacity(.4),
+                borderRadius: BorderRadius.circular(25),
+                image:const DecorationImage(
+                  image: AssetImage("assets/images/aaa.jpg"),
+                  opacity: .5,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-          ),
-          SizedBox(
+        ),
+         const SizedBox(
             height: 10,
           ),
       Expanded(
+        flex: 3,
         child: ListView.builder(
           
         itemCount: elroqia.length,

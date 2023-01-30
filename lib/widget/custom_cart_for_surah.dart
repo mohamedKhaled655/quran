@@ -50,9 +50,16 @@ class CustomCardSurah extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                BigText(
-                  text: name,
-                  color: AppColor.iconColor1,
+                SizedBox(
+                  width: Dimensions.height10*11,
+                  child: Text(
+                     name,
+                    style: TextStyle(
+                      color: AppColor.iconColor1,
+                      fontSize: 18,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
                 ),
                 Row(
                   children: [
@@ -86,12 +93,27 @@ class CustomCardSurah extends StatelessWidget {
             Expanded(
               child: Container(),
             ),
-            BigText(
-              text: arabicName,
-              color: AppColor.iconColor2,
-              size: Dimensions.font20 + 5,
-
+            // BigText(
+            //   text: arabicName,
+            //   color: AppColor.iconColor2,
+            //   size: Dimensions.font20 + 5,
+            // ),
+            Text(
+              "    $arabicName",
+              style:  TextStyle(
+                  fontSize: 30,
+                  color: AppColor.iconColor2,
+                  fontFamily: 'quran',
+                  shadows:const [
+                    Shadow(
+                      offset: Offset(.5, .5),
+                      blurRadius: 1.0,
+                      color: Color.fromARGB(255, 130, 130, 130),
+                    )
+                  ]),
+              textDirection: TextDirection.rtl,
             ),
+
           ],
         ),
       ),

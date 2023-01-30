@@ -60,9 +60,11 @@ dependencies:
   get: ^4.1.4
   audioplayers: ^1.1.1
   stream_transform: ^2.0.1
-  advance_pdf_viewer: ^2.0.1
-  flutter_pdfview: ^1.2.1
   path_provider: ^2.0.1
+  scrollable_positioned_list: ^0.2.3
+  persistent_bottom_nav_bar: ^5.0.2
+  share_plus: ^4.5.3
+  rename: ^2.1.1
 
 dev_dependencies:
   flutter_test:
@@ -90,9 +92,15 @@ flutter:
   assets:
      - assets/images/
      - assets/languages/
-     - assets/pdf/quran.pdf
+     - assets/
   #   - images/a_dot_ham.jpeg
-
+  fonts:
+    - family: quran
+      fonts:
+        - asset: assets/HafsSmart_08.ttf
+    - family: me_quran
+      fonts:
+        - asset: assets/me_quran.ttf
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

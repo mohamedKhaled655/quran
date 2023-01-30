@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:quran_app/shared/component/constains.dart';
 import 'package:quran_app/utills/colors.dart';
 import 'package:quran_app/widget/big_text.dart';
 
+import 'custom_juz_builder.dart';
 import 'juz_body_screen.dart';
 
 
@@ -25,7 +27,12 @@ class JuzScreen extends StatelessWidget {
             onTap: (){
               
                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return JuzBodyScreen(num: index,);
+                return CustomBuildJuz(
+                arabic: quran[0],
+                sura: index,
+                suraName: arabicName[index]['name'],
+                ayah: 0,
+              );
               }));
             },
             child: Container(

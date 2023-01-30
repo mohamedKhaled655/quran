@@ -2,8 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quran_app/model/chaper_model.dart';
+import 'package:quran_app/screens/askar/askar_screen.dart';
 import 'package:quran_app/screens/prayer/prayer_screen.dart';
 import 'package:quran_app/shared/network/remote/dio_helper.dart';
+import 'package:quran_app/utills/errors/failure%20.dart';
 
 import '../home_screen.dart';
 import 'home_states.dart';
@@ -18,20 +20,18 @@ class HomeCubit extends Cubit<HomeStates>{
 
 
   List<Widget>bottomScreen=[
-    HomeScreen(),
+   const HomeScreen(),
    PrayerScreen(),
-   Container(),
+   const AskarScreen(ispressArrowBack: false),
   ];
-
   void changeBottom(int index)
   {
+  
     currentIndex=index;
- 
-
     emit(HomeChangeBottomNav());
   }
   
-late  ChaptersModel chaptersModel;
+  late  ChaptersModel chaptersModel;
   bool isChapter=false;
   
   void getChapters(){
@@ -47,7 +47,8 @@ late  ChaptersModel chaptersModel;
     }).catchError((e){
       isChapter=false;
       print("error= "+e.toString());
-      emit(ChapterErrorState(message: e.toString()));
+      
+      emit(ChapterErrorState(message: ServiceFailure.fromDioError(e).errorMessage));
     });
   }
 /*
@@ -74,6 +75,7 @@ late  ChaptersModel chaptersModel;
     }
   }
 */
+
 
 
 

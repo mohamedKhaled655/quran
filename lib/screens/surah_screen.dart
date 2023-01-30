@@ -14,8 +14,13 @@ class SurahScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+   
     var model = chaptersModel.chapters;
-    return Scaffold(
+    if(chaptersModel.chapters.isEmpty){
+      return const Center(child: CircularProgressIndicator());
+    }
+   else{
+     return Scaffold(
       
       body:Column(
         children: [
@@ -83,5 +88,6 @@ class SurahScreen extends StatelessWidget {
         ],
       ),
     );
+   }
   }
 }

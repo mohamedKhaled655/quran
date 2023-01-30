@@ -19,7 +19,8 @@ class SebhaScreen extends StatelessWidget {
           builder: (context, state) {
             var cubit = SebhaCubit.get(context);
             bool isSave = false;
-            return Column(
+            return ListView(
+              
               children: [
                 CustomAppBar(
                   isDrawer: false,
@@ -37,17 +38,21 @@ class SebhaScreen extends StatelessWidget {
                   },
                   child: Container(
                     height: Dimensions.height100 * 5,
-                    child: Center(
-                        child: Text(
-                      "${cubit.counter}",
-                      style: TextStyle(
-                        fontSize: Dimensions.font30,
-                        fontWeight: FontWeight.bold,
+                   width: double.maxFinite,
+                   //padding: EdgeInsets.all(20),
+                    child:Center(
+                      child: Text(
+                        "${cubit.counter}",
+                        style: TextStyle(
+                      fontSize: Dimensions.font30,
+                      fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    )),
+                    ),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      image: DecorationImage(
+                     
+                      image:const DecorationImage(
                         image: AssetImage("assets/images/sbha.png"),
                       ),
                     ),

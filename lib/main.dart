@@ -1,12 +1,9 @@
-import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:quran_app/check_internet/internet_cubit/check_internet_cubit.dart';
 import 'package:quran_app/check_internet/internet_cubit/check_internet_states.dart';
-import 'package:quran_app/screens/home_layout/home_layout.dart';
 import 'package:quran_app/utills/colors.dart';
-import 'package:quran_app/widget/check_page.dart';
 
 import 'screens/home_layout/start_screen.dart';
 import 'shared/bloc_observer.dart';
@@ -15,7 +12,6 @@ import 'shared/network/remote/dio_helper.dart';
 
 void main()async {
  WidgetsFlutterBinding.ensureInitialized();
-
 
   Bloc.observer = MyBlocObserver();
   DioHelper.init();
@@ -37,7 +33,7 @@ final navigatorKey=GlobalKey<NavigatorState>();
     return BlocProvider(
       create: (context) => CheckInternetCubit()..checkInternet(),
       child: GetMaterialApp(
-        title: 'Flutter Demo',
+        title: 'Quran',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
     
@@ -51,7 +47,7 @@ final navigatorKey=GlobalKey<NavigatorState>();
               if(state is InternetNotConnectedState){
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      padding: EdgeInsets.all(20),
+                      padding:const EdgeInsets.all(20),
                       content:Text(state.message),
                       backgroundColor:Colors.red ,
                     ),
@@ -60,7 +56,7 @@ final navigatorKey=GlobalKey<NavigatorState>();
                 else if(state is InternetConnectedState){
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      padding: EdgeInsets.all(20),
+                      padding:const EdgeInsets.all(20),
                       content: Text(state.message),
                       backgroundColor:Colors.green ,
                     ),

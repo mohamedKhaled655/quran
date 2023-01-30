@@ -11,35 +11,39 @@ class AskarNightScreen extends StatelessWidget {
     return Container(
       child: Column(
         children: [
-          Divider(),
-          Container(
-            height: Dimensions.height200,
-            margin: EdgeInsets.only(
-                left: Dimensions.height10, right: Dimensions.height20),
-            //width: 300,
-            child: Center(
-                child: Text(
-              "الأذكار من بعد العصر الى المغرب",
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: Dimensions.font30 - 7,
-              ),
-            )),
-            decoration: BoxDecoration(
-              color: AppColor.paraColor.withOpacity(.4),
-              borderRadius: BorderRadius.circular(25),
-              image: DecorationImage(
-                image: AssetImage("assets/images/sl.png"),
-                opacity: .9,
-                fit: BoxFit.cover,
+         const Divider(),
+          Expanded(
+            flex: 1,
+            child: Container(
+              height: Dimensions.height200,
+              margin: EdgeInsets.only(
+                  left: Dimensions.height10, right: Dimensions.height20),
+              //width: 300,
+              child: Center(
+                  child: Text(
+                "الأذكار من بعد العصر الى المغرب",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: Dimensions.font30 - 7,
+                ),
+              )),
+              decoration: BoxDecoration(
+                color: AppColor.paraColor.withOpacity(.4),
+                borderRadius: BorderRadius.circular(25),
+                image: DecorationImage(
+                  image: AssetImage("assets/images/sl.png"),
+                  opacity: .9,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),
-          SizedBox(
+         const SizedBox(
             height: 10,
           ),
           Expanded(
+            flex: 2,
             child: ListView(
               padding: EdgeInsets.all(0),
               children: [

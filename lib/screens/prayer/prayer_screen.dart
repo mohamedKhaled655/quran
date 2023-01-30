@@ -16,8 +16,8 @@ class PrayerScreen extends StatefulWidget {
 
 class _PrayerScreenState extends State<PrayerScreen> {
   DateTime currentDate = DateTime.now();
-  DateTime currentDate1 = DateTime.parse(
-      "${DateTime.now().year}-${DateTime.now().month}-30 20:18:04Z");
+  //DateTime currentDate1 = DateTime.parse("${DateTime.now().year}-${DateTime.now().month}-31:00:00.000");
+
   DateTime firstData = DateTime(
     1999,
   );
@@ -44,7 +44,7 @@ class _PrayerScreenState extends State<PrayerScreen> {
       child: Scaffold(
         body: Column(
           children: [
-            CustomAppBar(),
+          const  CustomAppBar(),
 
             BlocBuilder<PrayerCubit, PrayerStates>(
               builder: (context, state) {
@@ -55,11 +55,14 @@ class _PrayerScreenState extends State<PrayerScreen> {
                   return PrayerBodyScreen(
                     lat: cubit.lat,
                     long: cubit.lang,
-                    currentDate:
-                        currentDate.day == 31 ? currentDate1 : currentDate,
+
+                    day:(currentDate.day==31)?30: currentDate.day,
+                    month:currentDate.month ,
+                    year: currentDate.year,
                   );
                 } else {
                   return Expanded(
+                    flex:2,
                     child: Container(
                       height: Dimensions.height200 - Dimensions.height20,
                       margin: EdgeInsets.only(
@@ -69,53 +72,56 @@ class _PrayerScreenState extends State<PrayerScreen> {
                           bottom: Dimensions.height20),
                       decoration: BoxDecoration(
                         color: AppColor.paraColor.withOpacity(.4),
-                        image: DecorationImage(
+                        image:const DecorationImage(
                             image: AssetImage("assets/images/sl.png"),
                             fit: BoxFit.fill,
                             opacity: .8),
                         borderRadius: BorderRadius.all(
                             Radius.circular(Dimensions.radius20)),
                       ),
-                      child: Center(child: CircularProgressIndicator()),
+                      child: const Center(child: CircularProgressIndicator()),
                     ),
                   );
                 }
               },
             ),
-            Container(
-              width: Dimensions.screenWidth - 50,
-              height: Dimensions.height200 * 1.75,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(Dimensions.radius30),
-                    bottomRight: Radius.circular(Dimensions.radius30)),
-                color: AppColor.paraColor.withOpacity(.4),
-              ),
-              child: CalendarDatePicker(
-                firstDate: firstData,
-                lastDate: sectData,
-                initialDate: currentDate,
-                currentDate: currentDate,
-                initialCalendarMode: DatePickerMode.day,
-                onDateChanged: (DateTime dateTime) {
-                  setState(() {
-                    currentDate = dateTime;
-                    print("currentDate = ");
-                    print(currentDate);
-                  });
-                },
+            Expanded(
+              flex: 4,
+              child: Container(
+                width: Dimensions.screenWidth - 50,
+                height: Dimensions.height200 * 1.75,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(Dimensions.radius30),
+                      bottomRight: Radius.circular(Dimensions.radius30)),
+                  color: AppColor.paraColor.withOpacity(.4),
+                ),
+                child: CalendarDatePicker(
+                  firstDate: firstData,
+                  lastDate: sectData,
+                  initialDate: currentDate,
+                  currentDate: currentDate,
+                  initialCalendarMode: DatePickerMode.day,
+                  onDateChanged: (DateTime dateTime) {
+                    setState(() {
+                      currentDate = dateTime;
+                      print("currentDate = ");
+                      print(currentDate);
+                    });
+                  },
+                ),
               ),
             ),
             // Text(lat.toString()),
-
-            Expanded(
+          //  const Spacer(),
+              Expanded(
               flex: 1,
               child: Container(
                 height: Dimensions.height30 * 2 + Dimensions.height10,
                 margin:
-                    EdgeInsets.only(left: 20, right: 20, top: 18, bottom: 8),
+                   const EdgeInsets.only(left: 20, right: 20, top: 18, bottom: 8),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
+                  borderRadius:const BorderRadius.only(
                       topLeft: Radius.circular(15),
                       bottomRight: Radius.circular(15)),
                   color: AppColor.paraColor.withOpacity(.4),
@@ -144,7 +150,7 @@ class _PrayerScreenState extends State<PrayerScreen> {
                 ),
               ),
             ),
-            Divider(),
+           const  Divider(),
           ],
         ),
       ),

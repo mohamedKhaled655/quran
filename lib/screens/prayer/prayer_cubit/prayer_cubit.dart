@@ -17,6 +17,10 @@ class PrayerCubit extends Cubit<PrayerStates>{
 
 
   DateTime currentDate = DateTime.now();
+  //DateTime currentDate1=DateTime.parse("${DateTime.now().year}-${DateTime.now().month}-31 00:00:00.000");
+
+
+
   DateTime firstData = DateTime(
     1999,
   );
@@ -32,7 +36,7 @@ class PrayerCubit extends Cubit<PrayerStates>{
   void getLoc(BuildContext context) async {
     emit(ServicesLocationLoadingState());
    await servicesLocation.getPostion(context);
-    
+
     Position currentLocation = await servicesLocation.getLatAndLang();
    if(currentLocation.latitude!=0){
     lat=currentLocation.latitude;
@@ -52,7 +56,6 @@ class PrayerCubit extends Cubit<PrayerStates>{
       prayerTimesModel=PrayerTimesModel.fromJson(value.data);
       isPrayer=true;
       print("prayerTimesModel= "+prayerTimesModel.data[0].date.gregorian.day);
-      
       emit(PrayerSuccessState());
     })
     .catchError((e){

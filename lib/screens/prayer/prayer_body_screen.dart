@@ -3,21 +3,23 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quran_app/screens/prayer/prayer_cubit/prayer_cubit.dart';
 import 'package:quran_app/utills/colors.dart';
 import 'package:quran_app/utills/diminsions.dart';
-import 'package:quran_app/widget/small_text.dart';
+import 'package:quran_app/widget/custom_prayer_time.dart';
 
 import 'prayer_cubit/prayer_states.dart';
 
 class PrayerBodyScreen extends StatelessWidget {
-  // DateTime currentDate = DateTime.now();
   final double lat, long;
-  final DateTime currentDate;
+  final  int day;
+  final  int month;
+  final  int year;
   PrayerBodyScreen(
       {Key? key,
       required this.lat,
       required this.long,
-      required this.currentDate})
+     // required this.currentDate,
+        required this.day,required this.month,required this.year})
       : super(key: key);
-  int x31 = 30;
+
   List time = [
     "Fajr",
     "Sunrise",
@@ -31,164 +33,85 @@ class PrayerBodyScreen extends StatelessWidget {
   ];
   @override
   Widget build(BuildContext context) {
-    print("= " + currentDate.day.toString());
+    //print("= " + currentDate.day.toString());
     return BlocProvider(
       create: (context) => PrayerCubit()
         ..getTimingPrayer(
             lat: lat,
             long: long,
-            day: currentDate.day == 31 ? x31 : currentDate.day,
-            month: currentDate.month,
-            year: currentDate.year),
+
+          day: day,
+          month: month,
+          year: year,
+        ),
       child: BlocBuilder<PrayerCubit, PrayerStates>(
         builder: (context, state) {
           var cubit = PrayerCubit.get(context);
           if (cubit.isPrayer == true) {
-            return Container(
-              height: Dimensions.height200 - Dimensions.height20,
-              margin: EdgeInsets.only(
-                  left: Dimensions.height20,
-                  right: Dimensions.height20,
-                  top: Dimensions.height20,
-                  bottom: Dimensions.height20),
-              decoration: BoxDecoration(
-                color: AppColor.paraColor.withOpacity(.4),
-                image: DecorationImage(
-                    image: AssetImage("assets/images/sl.png"),
-                    fit: BoxFit.fill,
-                    opacity: .8),
-                borderRadius:
-                    BorderRadius.all(Radius.circular(Dimensions.radius20)),
-              ),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
+            return  Expanded(
+              flex: 2,
+              child: Container(
+                height: Dimensions.height200 - Dimensions.height20,
+                margin: EdgeInsets.only(
+                    left: Dimensions.height20,
+                    right: Dimensions.height20,
+                    top: Dimensions.height20,
+                    bottom: Dimensions.height20),
+                decoration: BoxDecoration(
+                  color: AppColor.paraColor.withOpacity(.4),
+                  image:const DecorationImage(
+                      image: AssetImage("assets/images/sl.png"),
+                      fit: BoxFit.fill,
+                      opacity: .8),
+                  borderRadius:
+                      BorderRadius.all(Radius.circular(Dimensions.radius20)),
+                ),
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+
                   children: [
-                    Container(
-                      height: Dimensions.height100,
-                      width: Dimensions.height100,
-                      margin: EdgeInsets.only(
-                          left: Dimensions.height10,
-                          bottom: Dimensions.height10,
-                          right: Dimensions.height10 / 2),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(25),
-                          color: Colors.black26),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SmallText(
-                              text: time[0],
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
-                          SmallText(
-                              text: cubit.prayerTimesModel.data[currentDate.day]
-                                  .timings.Fajr,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      height: Dimensions.height100,
-                      width: Dimensions.height100,
-                      margin: EdgeInsets.only(
-                          left: Dimensions.height10,
-                          bottom: Dimensions.height10,
-                          right: Dimensions.height10 / 2),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(25),
-                          color: Colors.black26),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SmallText(
-                              text: time[2],
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
-                          SmallText(
-                              text: cubit.prayerTimesModel.data[currentDate.day]
-                                  .timings.Dhuhr,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      height: Dimensions.height100,
-                      width: Dimensions.height100,
-                      margin: EdgeInsets.only(
-                          left: Dimensions.height10,
-                          bottom: Dimensions.height10,
-                          right: Dimensions.height10 / 2),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(25),
-                          color: Colors.black26),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SmallText(
-                              text: time[3],
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
-                          SmallText(
-                              text: cubit.prayerTimesModel.data[currentDate.day]
-                                  .timings.Asr,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      height: Dimensions.height100,
-                      width: Dimensions.height100,
-                      margin: EdgeInsets.only(
-                          left: Dimensions.height10,
-                          bottom: Dimensions.height10,
-                          right: Dimensions.height10 / 2),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(25),
-                          color: Colors.black26),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SmallText(
-                              text: time[5],
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
-                          SmallText(
-                              text: cubit.prayerTimesModel.data[currentDate.day]
-                                  .timings.Maghrib,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      height: Dimensions.height100,
-                      width: Dimensions.height100,
-                      margin: EdgeInsets.only(
-                          left: Dimensions.height10,
-                          bottom: Dimensions.height10,
-                          right: Dimensions.height10 / 2),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(25),
-                          color: Colors.black26),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SmallText(
-                              text: time[6],
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
-                          SmallText(
-                              text: cubit.prayerTimesModel.data[currentDate.day]
-                                  .timings.Isha,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
-                        ],
-                      ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        CustomPrayerTime(
+                          timeIndex: 0,
+                          titleName: cubit.prayerTimesModel.data[day].timings.Fajr,
+                          right: Dimensions.height10 / 2,
+                          left:Dimensions.height10*2 ,
+                        ),
+                        CustomPrayerTime(
+                          timeIndex: 2,
+                          titleName: cubit.prayerTimesModel.data[day].timings.Dhuhr,
+                          right: Dimensions.height10 / 2,
+                          left:Dimensions.height10 ,
+                        ),
+
+                        CustomPrayerTime(
+                          timeIndex: 3,
+                          titleName: cubit.prayerTimesModel.data[day]
+                              .timings.Asr,
+                          right: Dimensions.height10 / 2,
+                          left:Dimensions.height10 ,
+                        ),
+
+                        CustomPrayerTime(
+                          timeIndex: 5,
+                          titleName: cubit.prayerTimesModel.data[day]
+                              .timings.Maghrib,
+                          right: Dimensions.height10 / 2,
+                          left:Dimensions.height10 ,
+                        ),
+
+                        CustomPrayerTime(
+                          timeIndex: 6,
+                          titleName: cubit.prayerTimesModel.data[day]
+                              .timings.Isha,
+                          right: Dimensions.height10 *2,
+                          left:Dimensions.height10 ,
+                        ),
+                        
+
+                      ],
                     ),
                   ],
                 ),
@@ -301,40 +224,46 @@ class PrayerBodyScreen extends StatelessWidget {
                   ),
                 );*/
           } else if (state is PrayerLoadingState) {
-            return Container(
-              height: Dimensions.height200 - Dimensions.height20,
-              margin: EdgeInsets.only(
-                  left: Dimensions.height20,
-                  right: Dimensions.height20,
-                  top: Dimensions.height20,
-                  bottom: Dimensions.height20),
-              decoration: BoxDecoration(
-                color: AppColor.paraColor.withOpacity(.4),
-                image: DecorationImage(
-                    image: AssetImage("assets/images/sl.png"),
-                    fit: BoxFit.fill,
-                    opacity: .8),
-                borderRadius:
-                    BorderRadius.all(Radius.circular(Dimensions.radius20)),
+            return Expanded(
+              flex: 2,
+              child: Container(
+                height: Dimensions.height200 - Dimensions.height20,
+                margin: EdgeInsets.only(
+                    left: Dimensions.height20,
+                    right: Dimensions.height20,
+                    top: Dimensions.height20,
+                    bottom: Dimensions.height20),
+                decoration: BoxDecoration(
+                  color: AppColor.paraColor.withOpacity(.4),
+                  image:const DecorationImage(
+                      image: AssetImage("assets/images/sl.png"),
+                      fit: BoxFit.fill,
+                      opacity: .8),
+                  borderRadius:
+                      BorderRadius.all(Radius.circular(Dimensions.radius20)),
+                ),
+                child:const Center(child: CircularProgressIndicator()),
               ),
-              child: Center(child: CircularProgressIndicator()),
             );
           } else {
-            return Container(
-              height: Dimensions.height200 - Dimensions.height20,
-              margin: EdgeInsets.only(
-                  left: Dimensions.height20,
-                  right: Dimensions.height20,
-                  top: Dimensions.height20,
-                  bottom: Dimensions.height20),
-              decoration: BoxDecoration(
-                color: AppColor.paraColor.withOpacity(.4),
-                image: DecorationImage(
-                    image: AssetImage("assets/images/sl.png"),
-                    fit: BoxFit.fill,
-                    opacity: .8),
-                borderRadius:
-                    BorderRadius.all(Radius.circular(Dimensions.radius20)),
+            return Expanded(
+              flex: 2,
+              child: Container(
+                height: Dimensions.height200 - Dimensions.height20,
+                margin: EdgeInsets.only(
+                    left: Dimensions.height20,
+                    right: Dimensions.height20,
+                    top: Dimensions.height20,
+                    bottom: Dimensions.height20),
+                decoration: BoxDecoration(
+                  color: AppColor.paraColor.withOpacity(.4),
+                  image:const DecorationImage(
+                      image: AssetImage("assets/images/sl.png"),
+                      fit: BoxFit.fill,
+                      opacity: .8),
+                  borderRadius:
+                      BorderRadius.all(Radius.circular(Dimensions.radius20)),
+                ),
               ),
             );
           }
@@ -343,3 +272,5 @@ class PrayerBodyScreen extends StatelessWidget {
     );
   }
 }
+
+

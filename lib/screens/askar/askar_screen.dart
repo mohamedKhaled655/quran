@@ -10,8 +10,9 @@ import 'sleeping_screen.dart';
 import 'praying_askar_screen.dart';
 
 class AskarScreen extends StatefulWidget {
+  final bool ispressArrowBack;
   const AskarScreen({
-    Key? key,
+    Key? key, this.ispressArrowBack=true,
   }) : super(
           key: key,
         );
@@ -33,12 +34,15 @@ class _AskarScreenState extends State<AskarScreen>
         children: [
           CustomAppBar(
             isDrawer: false,
-            url: "assets/images/arrow.png",
-            imageH: Dimensions.height20,
-            imageW: Dimensions.height20,
-            text: "Askar     ",
+            url:(widget.ispressArrowBack==false)?"assets/images/azkar.png": "assets/images/arrow.png",
+            imageH:(widget.ispressArrowBack==false)?Dimensions.height20*2: Dimensions.height20,
+            imageW: (widget.ispressArrowBack==false)?Dimensions.height20*2: Dimensions.height20,
+            text: "AZKAR           ",
             onPress: () {
-              Navigator.of(context).pop();
+              if(widget.ispressArrowBack==true)
+              {
+                Navigator.of(context).pop();
+              }
             },
           ),
           //tab bar

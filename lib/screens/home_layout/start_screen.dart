@@ -4,7 +4,6 @@ import 'package:quran_app/utills/colors.dart';
 import 'package:quran_app/utills/diminsions.dart';
 import 'package:quran_app/widget/big_text.dart';
 import 'package:quran_app/widget/custom_bottom.dart';
-import 'package:quran_app/widget/small_text.dart';
 
 import 'home_layout.dart';
 
@@ -15,7 +14,7 @@ class FirstScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
      
-      body: Column(
+      body: ListView(
        
         children: [
           SizedBox(height: Dimensions.height100,),
@@ -26,28 +25,55 @@ class FirstScreen extends StatelessWidget {
           ),
           Container(
             height: Dimensions.height300*2,
+            width: double.infinity,
             child: Stack(
               children: [
-                Align(
 
-                  child: Image.asset("assets/images/rec.png"),
-                ),
-                Positioned(
-                  left: Dimensions.height25*2,
-                  top: Dimensions.height150,
+                Center(
                   child: Container(
-                    width: 300,
-                    height: 300,
-                    child: Image.asset("assets/images/mosque.png", )),
+                    height: Dimensions.height10*44.7,
+                    width: Dimensions.height10*30,
+                    decoration: BoxDecoration(
+                      borderRadius:const BorderRadius.all(Radius.circular(20)),
+                      color: AppColor.iconColor1,
+                      image:const DecorationImage(
+                        image: AssetImage("assets/images/rec.png"),
+                      ),
+
+                    ),
+                    child: Image.asset("assets/images/Medina.png",opacity: const AlwaysStoppedAnimation(.7),),
+
+                  ),
                 ),
+
+                // Align(
+                //
+                //   child: Image.asset("assets/images/rec.png"),
+                //
+                // ),
+                // Positioned(
+                //   left: Dimensions.height25*2,
+                //   top: Dimensions.height150,
+                //
+                //   child: SizedBox(
+                //     width: Dimensions.height300,
+                //     height: Dimensions.height300,
+                //     child: Image.asset(
+                //       "assets/images/Medina.png",
+                //       opacity: const AlwaysStoppedAnimation(.7),
+                //       )
+                //       ),
+                // ),
                 Positioned(
                   left: Dimensions.height120,
                   top: Dimensions.height200*2+Dimensions.height100-10,
+                  right: Dimensions.height120,
+
                   child: CustomButton(
                     buttonText: "Get Started",
                     radius: Dimensions.radius20-2,
                     width: Dimensions.height200-30,
-                   
+
                     onPressed: (){
                       Navigator.pushReplacement(context, MaterialPageRoute(
                         builder: (context){

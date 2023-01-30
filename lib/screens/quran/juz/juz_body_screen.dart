@@ -17,7 +17,7 @@ class JuzBodyScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         body: Container(
           height: double.infinity,
-          decoration: BoxDecoration(
+          decoration:const BoxDecoration(
             image: DecorationImage(
               image: AssetImage("assets/images/background.png"),
               fit: BoxFit.fill,

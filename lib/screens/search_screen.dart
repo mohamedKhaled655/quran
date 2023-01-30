@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:quran_app/model/chaper_model.dart';
+import 'package:quran_app/screens/quran/surah/custom_build_surah.dart';
+import 'package:quran_app/widget/custom_cart_for_surah.dart';
 
+import '../shared/component/constains.dart';
 
+List<Map> fName=[];
 class DataSearch extends SearchDelegate{
 
  
-  List<Chapters> chapter;
-  DataSearch({required this.chapter});
+  List<Map> arabicName;
+  DataSearch({required this.arabicName});
 
 
 
@@ -52,24 +55,36 @@ class DataSearch extends SearchDelegate{
 
 
     //List filterTitle=popularTitle.where((element) => element.contains(query)).toList();
-    List<Chapters> filterTitle=chapter.where((element) => element.nameArabic.startsWith(query)).toList();
+    List<Map> filterTitle=arabicName.where((element) => element["name"].startsWith(query)).toList();
     //List filterTitle=chapter.where((element) => element.contains(query)).toList();
-
+  
 
 
     return ListView.builder(
-        itemCount:(query.isEmpty)? chapter.length:filterTitle.length,
+        itemCount:(query.isEmpty)? arabicName.length:filterTitle.length,
         itemBuilder:(context,index){
           return InkWell(
             onTap: (){
-              query=query.isEmpty?chapter[index].nameArabic:filterTitle[index].nameArabic;
-              showResults(context);
+              //query=query.isEmpty?arabicName[index]["name"]:filterTitle[index]["name"];
+              //showResults(context);
+              Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => CustomBuildSurah(
+                          arabic: quran[0],
+                          sura: index,
+                          suraName: filterTitle[index]['name'],
+                          ayah: 0,
+                        )),
+                  );
             },
-            child: Container(
-              margin: EdgeInsets.all(10),
-              padding: EdgeInsets.symmetric(horizontal: 8),
-             // child: Text((query.isEmpty)? names[index]:filterNames[index]),
-              child:  Text((query.isEmpty)? chapter[index].nameArabic:filterTitle[index].nameArabic),
+            
+            child: CustomCardSurah(
+              arabicName: (query.isEmpty)? arabicName[index]["name"]:filterTitle[index]["name"],
+              name: (query.isEmpty)? arabicName[index]["nameEN"]:filterTitle[index]["nameEN"],
+              meccaOrmadina: "",
+              number: "${index+1}",
+              verses: "${noOfVerses[index]} verses",
             ),
           );
         },

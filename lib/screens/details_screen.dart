@@ -1,20 +1,21 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:quran_app/screens/quran/juz/pdf_screen.dart';
-import 'package:quran_app/screens/quran/surah/surah_cubit.dart';
-import 'package:quran_app/screens/quran/surah/surah_states.dart';
+import 'package:quran_app/screens/quran/surah/custom_build_surah.dart';
+import 'package:quran_app/screens/quran/surah/surah_cubit/surah_cubit.dart';
+import 'package:quran_app/screens/quran/surah/surah_cubit/surah_states.dart';
+import 'package:quran_app/shared/component/constains.dart';
 
 import 'package:quran_app/utills/colors.dart';
 import 'package:quran_app/utills/diminsions.dart';
 import 'package:quran_app/widget/big_text.dart';
 import 'package:quran_app/widget/custom_app_bar.dart';
+import 'package:quran_app/widget/custom_loader.dart';
 
 import 'audio_file.dart';
 import 'search_screen.dart';
 
 class DetailsScreen extends StatelessWidget {
-  
   final name, englishName, meccOrMad, verses;
   final bool isBismillah;
   final int numberOfSurah;
@@ -34,8 +35,8 @@ class DetailsScreen extends StatelessWidget {
       body: Column(
         children: [
           CustomAppBar(
-            searchOnPress: (){
-              showSearch(context: context, delegate:DataSearch( chapter: []) );
+            searchOnPress: () {
+              showSearch(context: context, delegate: DataSearch(arabicName: arabicName));
             },
             isDrawer: false,
             url: "assets/images/arrow.png",
@@ -48,10 +49,10 @@ class DetailsScreen extends StatelessWidget {
           Container(
             height: Dimensions.height200 + Dimensions.height100 / 2,
             width: double.maxFinite,
-            margin: EdgeInsets.all(20),
+            margin: const EdgeInsets.all(20),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(Dimensions.radius30),
-              image: DecorationImage(
+              image: const DecorationImage(
                 image: AssetImage("assets/images/ss.png"),
                 opacity: .3,
               ),
@@ -115,20 +116,21 @@ class DetailsScreen extends StatelessWidget {
                     ? Container(
                         height: Dimensions.height100,
                         width: double.infinity,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           image: DecorationImage(
                             image: AssetImage("assets/images/iii.png"),
                           ),
                         ),
                       )
-                    : SizedBox.shrink(),
+                    : const SizedBox.shrink(),
               ],
             ),
           ),
           BlocProvider(
             create: (context) => SurahCubit()
               ..getSurah(numberOfSurah + 1)
-              ..getTranSurah(numberOfSurah + 1)..getAudio(numberOfSurah+1),
+              ..getTranSurah(numberOfSurah + 1)
+              ..getAudio(numberOfSurah + 1),
             child: BlocBuilder<SurahCubit, SurahStates>(
               builder: (context, state) {
                 var cubit = SurahCubit.get(context);
@@ -137,9 +139,9 @@ class DetailsScreen extends StatelessWidget {
                     child: ListView.separated(
                       shrinkWrap: true,
                       itemBuilder: (context, index) {
-                         AudioPlayer advancedPlayer=AudioPlayer();
+                        AudioPlayer advancedPlayer = AudioPlayer();
                         return Container(
-                          margin: EdgeInsets.only(left: 20, right: 20),
+                          margin: const EdgeInsets.only(left: 20, right: 20),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -154,7 +156,7 @@ class DetailsScreen extends StatelessWidget {
                                 child: Row(
                                   children: [
                                     Container(
-                                      margin: EdgeInsets.only(left: 10),
+                                      margin: const EdgeInsets.only(left: 10),
                                       child: CircleAvatar(
                                         child: Text(
                                             "${cubit.surahModel.verses[index].verseKey}"),
@@ -173,29 +175,44 @@ class DetailsScreen extends StatelessWidget {
                                         ),
                                         IconButton(
                                           onPressed: () {
-                                            
                                             Navigator.push(context,
                                                 MaterialPageRoute(
                                                     builder: (context) {
-                                                      if(cubit.isAudioLoading==true)
-                                                      {
-                                                        return  AudioFile(advancedPlayer:advancedPlayer,audioModel: cubit.audioModel,index: numberOfSurah+1,);
-
-                                                      }
-                                                      else if(state is AudioLoadingState){return Center(child: CircularProgressIndicator());}
-                                                      else{
-                                                        if(state is AudioErrorState){return Scaffold(
-                                                          body: Container(
-                                                          padding: EdgeInsets.all(20),
-                                                          color: AppColor.mainColor,
-                                                          child: Center(child: Text(state.message,maxLines: 4,),),
+                                              if (cubit.isAudioLoading ==
+                                                  true) {
+                                                return AudioFile(
+                                                  advancedPlayer:
+                                                      advancedPlayer,
+                                                  audioModel: cubit.audioModel,
+                                                  index: numberOfSurah + 1,
+                                                );
+                                              } else if (state
+                                                  is AudioLoadingState) {
+                                                return const Center(
+                                                    child:
+                                                        CircularProgressIndicator());
+                                              } else {
+                                                if (state is AudioErrorState) {
+                                                  return Scaffold(
+                                                    body: Container(
+                                                      padding:const
+                                                          EdgeInsets.all(20),
+                                                      color: AppColor.mainColor,
+                                                      child: Center(
+                                                        child: Text(
+                                                          state.message,
+                                                          maxLines: 4,
                                                         ),
-                                                        );}
-                                                        return Container(color: AppColor.mainColor,child: Text("error Audio"),);
-                                                      }
-                                                
+                                                      ),
+                                                    ),
+                                                  );
+                                                }
+                                                return Container(
+                                                  color: AppColor.mainColor,
+                                                  child:const Text("error Audio"),
+                                                );
+                                              }
                                             }));
-                                          
                                           },
                                           icon: Icon(Icons.play_arrow,
                                               size: Dimensions.font30 + 5,
@@ -203,10 +220,15 @@ class DetailsScreen extends StatelessWidget {
                                         ),
                                         IconButton(
                                           onPressed: () {
-                                             Navigator.push(context,
+                                            Navigator.push(context,
                                                 MaterialPageRoute(
                                                     builder: (context) {
-                                                     return PdfScreen(num:  0,);
+                                              return CustomBuildSurah(
+                                                arabic: quran[0],
+                                                sura: index,
+                                                suraName: arabicName[index]['name'],
+                                                ayah: 0,
+                                              );
                                             }));
                                           },
                                           icon: Icon(
@@ -259,20 +281,29 @@ class DetailsScreen extends StatelessWidget {
                       itemCount: cubit.surahModel.verses.length,
                     ),
                   );
-                } else if (state is TranSurahLoadingState) {
-                  return Center(child: CircularProgressIndicator());
-                } else if (state is SurahLoadingState) {
-                  return Center(child: CircularProgressIndicator());
-                } else {
-                  if (state is SurahErrorState) {
-                    return Expanded(child: Padding(
+                }
+
+                else if (state is SurahErrorState) {
+                  return Expanded(
+                      child: Padding(
                         padding: const EdgeInsets.all(20),
-                        child: Text(state.message,),
+                        child: Text(
+                          state.message,
+                        ),
                       ));
-                  } else if (state is TranSurahErrorState) {
-                    return Text(state.message);
-                  }
-                  return Center(child: CircularProgressIndicator());
+                } else if (state is TranSurahErrorState) {
+                  return Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: Text(
+                          state.message,
+                        ),
+                      ));
+                }
+
+                else {
+
+                  return const CustomLoader();
                 }
               },
             ),

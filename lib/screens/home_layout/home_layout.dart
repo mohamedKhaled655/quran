@@ -5,12 +5,14 @@ import 'package:quran_app/check_internet/internet_cubit/check_internet_cubit.dar
 import 'package:quran_app/check_internet/internet_cubit/check_internet_states.dart';
 import 'package:quran_app/screens/ad3ya/ad3ya_screen.dart';
 import 'package:quran_app/screens/askar/askar_screen.dart';
-import 'package:quran_app/screens/quran/juz/pdf_screen.dart';
+import 'package:quran_app/screens/quran/surah/setting.dart';
+import 'package:quran_app/screens/quran/surah/test.dart';
 import 'package:quran_app/screens/sebha/sebha_screen.dart';
 import 'package:quran_app/screens/surah_screen.dart';
 
 import 'package:quran_app/utills/colors.dart';
 import 'package:quran_app/utills/diminsions.dart';
+import 'package:quran_app/widget/customLoad.dart';
 
 import 'home_cubit/home_cubit.dart';
 import 'home_cubit/home_states.dart';
@@ -49,10 +51,10 @@ class HomeLayout extends StatelessWidget {
               return Scaffold(
                 drawer: Drawer(
                   backgroundColor: AppColor.mainColor,
-                  child: Column(
+                  child: ListView(
                     children: <Widget>[
-                      SizedBox(
-                        height: 30,
+                       SizedBox(
+                        height: Dimensions.height10*3,
                       ),
                       DrawerHeader(
                         child: Container(
@@ -61,7 +63,7 @@ class HomeLayout extends StatelessWidget {
                             child: Image.asset(
                               "assets/images/allah.png",
                             )),
-                        decoration: BoxDecoration(
+                        decoration:const BoxDecoration(
                           color: Colors.transparent,
                         ),
                       ),
@@ -73,10 +75,10 @@ class HomeLayout extends StatelessWidget {
                           Navigator.of(context).pop();
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
-                                return SurahScreen(chaptersModel: cubit.chaptersModel);
+                                return (cubit.isChapter==false)? const CustomLoading():SurahScreen(chaptersModel: cubit.chaptersModel);
                               }));
                         },
-                        child: Text(
+                        child:const Text(
                           'Surah',
                           style: TextStyle(
                             fontFamily: 'Avenir',
@@ -86,18 +88,18 @@ class HomeLayout extends StatelessWidget {
                           textAlign: TextAlign.center,
                         ),
                       ),
-                      SizedBox(
-                        height: 45,
-                      ),
-                       GestureDetector(
+                    SizedBox(
+                      height: Dimensions.height10*3.5,
+                    ),
+                      GestureDetector(
                         onTap: () {
-                          Navigator.of(context).pop();
-                          Navigator.push(context,
+                           Navigator.of(context).pop();
+                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
-                                return PdfScreen(num: 569,);
+                                return const TestScreen();
                               }));
                         },
-                        child: Text(
+                        child:const Text(
                           'Quran',
                           style: TextStyle(
                             fontFamily: 'Avenir',
@@ -108,18 +110,19 @@ class HomeLayout extends StatelessWidget {
                         ),
                       ),
                       SizedBox(
-                        height: 45,
+                        height: Dimensions.height10*3.5,
                       ),
+                      
                       GestureDetector(
                         onTap: () {
                           Navigator.of(context).pop();
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
-                                return AskarScreen();
+                                return const AskarScreen();
                               }));
                         },
-                        child: Text(
-                          'ASKAR',
+                        child:const Text(
+                          'Azkar',
                           style: TextStyle(
                             fontFamily: 'Avenir',
                             fontSize: 24,
@@ -129,17 +132,17 @@ class HomeLayout extends StatelessWidget {
                         ),
                       ),
                       SizedBox(
-                        height: 45,
+                        height: Dimensions.height10*3.5,
                       ),
                       GestureDetector(
                         onTap: () {
                            Navigator.of(context).pop();
                            Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
-                                return AdayaScreen();
+                                return const AdayaScreen();
                               }));
                         },
-                        child: Text(
+                        child:const Text(
                           'Ad3ya',
                           style: TextStyle(
                             fontFamily: 'Avenir',
@@ -151,7 +154,7 @@ class HomeLayout extends StatelessWidget {
                       ),
 
                       SizedBox(
-                        height: 45,
+                        height: Dimensions.height10*3.5,
                       ),
                       GestureDetector(
                         onTap: () {
@@ -161,7 +164,7 @@ class HomeLayout extends StatelessWidget {
                                 return SebhaScreen();
                               }));
                         },
-                        child: Text(
+                        child:const Text(
                           'Sebha',
                           style: TextStyle(
                             fontFamily: 'Avenir',
@@ -171,10 +174,32 @@ class HomeLayout extends StatelessWidget {
                           textAlign: TextAlign.center,
                         ),
                       ),
-                      
+
                       SizedBox(
-                        height: 45,
+                        height: Dimensions.height10*3.5,
                       ),
+                       GestureDetector(
+                        onTap: () {
+                           Navigator.of(context).pop();
+                           Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                                return const Settings();
+                              }));
+                        },
+                        child:const Text(
+                          'Settings',
+                          style: TextStyle(
+                            fontFamily: 'Avenir',
+                            fontSize: 24,
+                            fontWeight: FontWeight.w700,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+
+
+                      
+                     
                       
                     ],
                   ),
@@ -182,90 +207,59 @@ class HomeLayout extends StatelessWidget {
                 body: cubit.bottomScreen[cubit.currentIndex],
                 bottomNavigationBar: BottomNavigationBar(
                   backgroundColor: AppColor.mainColor,
+                  
                   currentIndex: cubit.currentIndex,
                   onTap: (index) {
                     cubit.changeBottom(index);
                   },
-                  selectedItemColor: AppColor.buttonBackgroundColor,
+                  selectedItemColor: AppColor.iconColor1,
                   items: [
                     BottomNavigationBarItem(
-                      icon: CircleAvatar(
-                        radius: 20,
-                        child: Image.asset(
+                      icon: Image.asset(
                           "assets/images/icon4.png",
+                          color: Colors.black26,
+
                         ),
-                        backgroundColor: AppColor.iconColor2.withOpacity(.5),
-                      ),
-                      label: 'Profile',
-                      activeIcon: CircleAvatar(
-                        radius: 25,
-                        //backgroundColor: AppColor.iconColor2.withOpacity(.5),
-                        child: CircleAvatar(
-                          radius: 24,
-                          backgroundColor: AppColor.iconColor1,
-                          child: CircleAvatar(
-                            radius: 23,
-                            child: Image.asset(
-                              "assets/images/icon4.png",
-                            ),
-                            backgroundColor:
-                                AppColor.iconColor2.withOpacity(.3),
-                          ),
+                      label: 'Home',
+                      activeIcon: Image.asset(
+                          "assets/images/icon4.png",
+                          color: AppColor.iconColor1,
+                          scale:.9 ,
                         ),
-                      ),
                     ),
                     /////////////
                     BottomNavigationBarItem(
-                      icon: CircleAvatar(
-                        radius: 20,
+                      icon: SizedBox(
+                        height: 30,
+                        width: 30,
                         child: Image.asset(
-                          "assets/images/icon2.png",
-                        ),
-                        backgroundColor: AppColor.iconColor2.withOpacity(.5),
-                      ),
-                      label: 'Profile',
-                      activeIcon: CircleAvatar(
-                        radius: 25,
-                        backgroundColor: AppColor.iconColor2.withOpacity(.5),
-                        child: CircleAvatar(
-                          radius: 24,
-                          backgroundColor: AppColor.iconColor1,
-                          child: CircleAvatar(
-                            radius: 23,
-                            child: Image.asset(
-                              "assets/images/icon2.png",
-                            ),
-                            backgroundColor:
-                                AppColor.iconColor2.withOpacity(.3),
+                            "assets/images/praying.png",
+                            color: Colors.black26,
                           ),
-                        ),
+                      ),
+                      label: 'Prayer Time',
+                      activeIcon:SizedBox(
+                        height: 35,
+                        width: 35,
+                        child: Image.asset(
+                            "assets/images/praying.png",
+                            color: AppColor.iconColor1,
+                            scale: .9,
+                            
+                          ),
                       ),
                     ),
                     ///////////
                     BottomNavigationBarItem(
-                      icon: CircleAvatar(
-                        radius: 20,
-                        child: Image.asset(
-                          "assets/images/icon3.png",
-                        ),
-                        backgroundColor: AppColor.iconColor2.withOpacity(.5),
+                      icon: Image.asset(
+                        "assets/images/icon3.png",
+                        color: Colors.black26,
                       ),
-                      label: 'Profile',
-                      activeIcon: CircleAvatar(
-                        radius: 25,
-                        backgroundColor: AppColor.iconColor2.withOpacity(.5),
-                        child: CircleAvatar(
-                          radius: 24,
-                          backgroundColor: AppColor.iconColor1,
-                          child: CircleAvatar(
-                            radius: 23,
-                            child: Image.asset(
-                              "assets/images/icon3.png",
-                            ),
-                            backgroundColor:
-                                AppColor.iconColor2.withOpacity(.3),
-                          ),
-                        ),
+                      label: 'Askar',
+                      activeIcon: Image.asset(
+                        "assets/images/icon3.png",
+                        color: AppColor.iconColor1,
+                          scale: .9,
                       ),
                     ),
                     //////////

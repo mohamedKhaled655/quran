@@ -11,3 +11,5 @@ class ChapterErrorState extends HomeStates{
   ChapterErrorState({required this.message});
 }
 
+
+
